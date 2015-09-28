@@ -1,0 +1,67 @@
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+<p>
+  <strong>Name:</strong>
+  <%= @shoe.name %>
+</p>
+ 
+<p>
+  <%= image_tag @shoe.image_url.to_s %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @shoe.content %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @shoe.price %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= link_to @shoe.category.name , category_path(@shoe.category_id)%>
+</p>
+<p>
+  <strong>View:</strong>
+  <%= @shoe.impressionist_count%>
+</p>
+<h3>Comment</h3>
+<div id="comments">
+<% @shoe.comments.each do |s| %>
+  <div class="comment">
+  <strong><%= s.commenter %> :</strong>
+    <%= s.content %>
+  </div>
+<% end %>
+</div>
+
+
+<h2>New Comment</h2>
+
+<%= form_for([@shoe, @shoe.comments.build]) do |f| %>
+  <p hidden=true>
+    <%= f.label :commenter %><br>
+    <%= f.text_field :commenter, :value => current_user.email%>
+  </p>
+  <p>
+    <%= f.label :comment %><br>
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+
+
+    <tr>
+      <td><%= link_to 'Trang chu' , users_path %></td>
+    </tr>
